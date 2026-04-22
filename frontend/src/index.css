@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 8s ease-in-out infinite;
+}

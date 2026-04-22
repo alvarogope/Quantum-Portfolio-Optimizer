@@ -1,0 +1,39 @@
+# Environment variables - SENSITIVE
+.env
+.env.local
+.env.*.local
+*.env
+
+# API keys
+secrets.json
+credentials.json
+
+# Virtual environments
+venv/
+.venv/
+env/
+.uv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node modules (frontend)
+node_modules/
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
