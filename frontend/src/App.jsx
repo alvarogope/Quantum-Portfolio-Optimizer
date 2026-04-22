@@ -239,21 +239,26 @@ function App() {
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm text-white/40">Investment Amount</span>
                   <span className="text-sm font-medium">
-                    {investmentAmount !== '' ? `£${Number(investmentAmount).toLocaleString()}` : '—'}
+                    {investmentAmount !== '' ? `£${Math.min(Number(investmentAmount), 1000000).toLocaleString()}` : '—'}
                   </span>
                 </div>
                 <input
                   type="number"
                   min="0"
+                  max="1000000"
                   step="100"
                   value={investmentAmount}
+                  onKeyDown={e => {
+                    if (['e', 'E', '+', '-', '.'].includes(e.key)) e.preventDefault()
+                    const digits = investmentAmount.replace(/\D/g, '')
+                    if (digits.length >= 7 && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+                      e.preventDefault()
+                    }
+                  }}
                   onChange={e => {
-                    const raw = e.target.value
+                    const raw = e.target.value.replace(/\D/g, '').slice(0, 7)
                     setInvestmentAmount(raw)
-                    const val = Number(raw)
-                    if (raw !== '' && val < 0) setInvestmentError('Amount cannot be negative')
-                    else if (raw !== '' && val > 1000000) setInvestmentError('Amount cannot be more than £1,000,000')
-                    else setInvestmentError(null)
+                    setInvestmentError(null)
                   }}
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white text-right font-mono focus:outline-none focus:border-white/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   placeholder="e.g. 10000"
@@ -356,7 +361,7 @@ function App() {
                           />
                           <span className="text-sm font-medium">{item.name}</span>
                           <span className="text-sm text-white/40">
-                            {item.value}% · £{Math.round((Number(investmentAmount) || 0) * item.value / 100).toLocaleString()}
+                            {item.value}% · £{Math.round((Math.min(Number(investmentAmount), 1000000) || 0) * item.value / 100).toLocaleString()}
                           </span>
                         </div>
                       ))}
