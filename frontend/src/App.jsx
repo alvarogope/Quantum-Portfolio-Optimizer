@@ -31,6 +31,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [toast, setToast] = useState(null)
+  const [investmentAmount, setInvestmentAmount] = useState('')
+  const [investmentError, setInvestmentError] = useState(null)
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type })
@@ -90,8 +92,8 @@ function App() {
     : []
 
   const getRiskLabel = () => {
-    if (riskFactor < 0.3) return 'Aggressive'
-    if (riskFactor > 0.7) return 'Conservative'
+    if (riskFactor < 0.3) return 'Conservative'
+    if (riskFactor > 0.7) return 'Aggressive'
     return 'Balanced'
   }
 
@@ -132,12 +134,12 @@ function App() {
       <div className="relative z-10">
         {/* Header */}
         <header className="border-b border-white/5">
-          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="text-2xl">⚛️</span>
               <span className="text-lg font-medium tracking-tight">Quantum Portfolio</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-white/40">
+            <div className="hidden sm:flex items-center gap-2 text-xs text-white/40">
               <span className="px-2 py-1 rounded bg-white/5 border border-white/5">QAOA</span>
               <span className="px-2 py-1 rounded bg-white/5 border border-white/5">Qiskit</span>
             </div>
@@ -145,10 +147,10 @@ function App() {
         </header>
 
         {/* Main */}
-        <main className="max-w-7xl mx-auto px-6 py-12">
+        <main className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
           {/* Hero */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-semibold tracking-tight mb-4">
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4">
               Quantum Portfolio Optimizer
             </h1>
             <p className="text-lg text-white/40 max-w-xl mx-auto">
@@ -156,11 +158,11 @@ function App() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
             {/* Left Panel */}
             <div className="lg:col-span-3 space-y-6">
               {/* Stock Selection */}
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6">
+              <div className="rounded-2xl bg-white/[0.06] border border-white/[0.10] p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <h2 className="text-sm font-medium text-white/60 uppercase tracking-wider">Select Assets</h2>
@@ -176,7 +178,7 @@ function App() {
                   <span className="text-sm text-white/40">{selected.length} of 9</span>
                 </div>
 
-                <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                   {STOCKS.map(stock => (
                     <button
                       key={stock.symbol}
@@ -202,7 +204,7 @@ function App() {
               </div>
 
               {/* Risk Control */}
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6">
+              <div className="rounded-2xl bg-white/[0.06] border border-white/[0.10] p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-white/40">Risk Level</span>
@@ -227,17 +229,46 @@ function App() {
                   className="w-full h-1 bg-white/10 rounded-full cursor-pointer appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-110"
                 />
                 <div className="flex justify-between mt-2 text-xs text-white/30">
-                  <span>High Risk</span>
                   <span>Low Risk</span>
+                  <span>High Risk</span>
                 </div>
+              </div>
+
+              {/* Investment Amount */}
+              <div className="rounded-2xl bg-white/[0.06] border border-white/[0.10] p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-white/40">Investment Amount</span>
+                  <span className="text-sm font-medium">
+                    {investmentAmount !== '' ? `£${Number(investmentAmount).toLocaleString()}` : '—'}
+                  </span>
+                </div>
+                <input
+                  type="number"
+                  min="0"
+                  step="100"
+                  value={investmentAmount}
+                  onChange={e => {
+                    const raw = e.target.value
+                    setInvestmentAmount(raw)
+                    const val = Number(raw)
+                    if (raw !== '' && val < 0) setInvestmentError('Amount cannot be negative')
+                    else if (raw !== '' && val > 1000000) setInvestmentError('Amount cannot be more than £1,000,000')
+                    else setInvestmentError(null)
+                  }}
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white text-right font-mono focus:outline-none focus:border-white/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  placeholder="e.g. 10000"
+                />
+                {investmentError && (
+                  <p className="mt-2 text-xs text-red-400">{investmentError}</p>
+                )}
               </div>
 
               {/* Button */}
               <button
                 onClick={optimize}
-                disabled={loading || selected.length < 2}
+                disabled={loading || selected.length < 2 || !!investmentError}
                 className={`w-full py-4 rounded-xl text-base font-medium transition-all duration-200 ${
-                  loading || selected.length < 2
+                  loading || selected.length < 2 || !!investmentError
                     ? 'bg-white/5 text-white/20 cursor-not-allowed'
                     : 'bg-white text-black hover:bg-white/90 hover:scale-[1.01] active:scale-[0.99]'
                 }`}
@@ -267,7 +298,7 @@ function App() {
 
             {/* Right Panel */}
             <div className="lg:col-span-2">
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6 h-full">
+              <div className="rounded-2xl bg-white/[0.06] border border-white/[0.10] p-6 h-full">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-sm font-medium text-white/60 uppercase tracking-wider">Results</h2>
                   {result && (
@@ -324,7 +355,9 @@ function App() {
                             style={{ backgroundColor: COLORS[index % COLORS.length] }}
                           />
                           <span className="text-sm font-medium">{item.name}</span>
-                          <span className="text-sm text-white/40">{item.value}%</span>
+                          <span className="text-sm text-white/40">
+                            {item.value}% · £{Math.round((Number(investmentAmount) || 0) * item.value / 100).toLocaleString()}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -364,6 +397,22 @@ function App() {
                         </span>
                       </div>
                       <div className="flex items-center justify-between group">
+                          <div className="flex items-center gap-2">
+                              <span className="text-sm text-white/40">Sharpe Ratio</span>
+                              <div className="relative">
+                                  <svg className="w-3.5 h-3.5 text-white/30 hover:text-white/60 cursor-help transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 0 0118 0z" />
+                                  </svg>
+                                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-white text-black text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
+                                    Risk-adjusted return (higher is better)
+                                  </div>
+                              </div>
+                          </div>
+                          <span className={`text-lg font-semibold ${result.sharpe_ratio >= 1 ? 'text-emerald-400' : result.sharpe_ratio >= 0.5 ? 'text-amber-400' : 'text-red-400'}`}>
+                              {result.sharpe_ratio.toFixed(2)}
+                          </span>
+                      </div>
+                      <div className="flex items-center justify-between group">
                         <div className="flex items-center gap-2">
                           <span className="text-sm text-white/40">QAOA Energy</span>
                           <div className="relative">
@@ -380,6 +429,18 @@ function App() {
                         </span>
                       </div>
                     </div>
+
+                    {result.circuit && (
+                      <div className="pt-4 border-t border-white/5">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-white/40">QAOA Circuit</span>
+                          <span className="text-xs text-white/30">{selected.length} qubits</span>
+                        </div>
+                        <div className="bg-black/30 rounded-lg p-3 overflow-x-auto">
+                          <pre className="text-xs text-white/60 font-mono whitespace-pre">{result.circuit}</pre>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="h-72 flex flex-col items-center justify-center text-white/20">

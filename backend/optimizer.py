@@ -5,6 +5,7 @@ Quantum Portfolio Optimizer using QAOA
 import numpy as np
 from dataclasses import dataclass
 from typing import List
+from scipy.optimize import minimize
 
 from qiskit_optimization import QuadraticProgram
 from qiskit_optimization.algorithms import MinimumEigenOptimizer
@@ -19,6 +20,7 @@ class OptimizationResult:
     expected_return: float
     risk: float
     energy: float
+    sharpe_ratio: float
 
 
 class QuantumPortfolioOptimizer:
@@ -81,16 +83,44 @@ class QuantumPortfolioOptimizer:
 
         selected = [sym for sym in self.symbols if result.variables_dict[sym] > 0.5]
 
-        weight = 1.0 / len(selected) if selected else 0
-        allocations = {sym: weight if sym in selected else 0 for sym in self.symbols}
+        if not selected:
+            selected = self.symbols[:1]
+
+        sel_idx = [self.symbols.index(s) for s in selected]
+        sel_returns = self.returns[sel_idx]
+        sel_cov = self.covariance[np.ix_(sel_idx, sel_idx)]
+        n_sel = len(selected)
+
+        def objective(w):
+            port_risk = float(np.sqrt(w @ sel_cov @ w))
+            port_return = float(w @ sel_returns)
+            return self.risk_factor * port_risk - (1 - self.risk_factor) * port_return
+
+        mvo = minimize(
+            objective,
+            x0=np.ones(n_sel) / n_sel,
+            method="SLSQP",
+            bounds=[(0.0, 1.0)] * n_sel,
+            constraints={"type": "eq", "fun": lambda w: w.sum() - 1},
+        )
+
+        opt_weights = mvo.x if mvo.success else np.ones(n_sel) / n_sel
+        allocations = {sym: 0.0 for sym in self.symbols}
+        for sym, w in zip(selected, opt_weights):
+            allocations[sym] = float(w)
 
         weights = np.array([allocations[sym] for sym in self.symbols])
         expected_return = float(np.dot(weights, self.returns))
         risk = float(np.sqrt(np.dot(weights.T, np.dot(self.covariance, weights))))
 
+        # Sharpe Ratio (assuming 5% risk-free rate)
+        risk_free_rate = 0.05
+        sharpe_ratio = (expected_return - risk_free_rate) / risk if risk > 0 else 0
+
         return OptimizationResult(
             allocations=allocations,
             expected_return=expected_return,
             risk=risk,
-            energy=result.fval
+            energy=result.fval,
+            sharpe_ratio=sharpe_ratio
         )

@@ -49,6 +49,7 @@ dependencies = [
     { name = "qiskit-aer" },
     { name = "qiskit-algorithms" },
     { name = "qiskit-optimization" },
+    { name = "scipy" },
     { name = "uvicorn" },
     { name = "yfinance" },
 ]
@@ -62,6 +63,7 @@ requires-dist = [
     { name = "qiskit-aer", specifier = ">=0.17.2" },
     { name = "qiskit-algorithms", specifier = ">=0.4.0" },
     { name = "qiskit-optimization", specifier = ">=0.7.0" },
+    { name = "scipy", specifier = ">=1.17.1" },
     { name = "uvicorn", specifier = ">=0.45.0" },
     { name = "yfinance", specifier = ">=1.3.0" },
 ]

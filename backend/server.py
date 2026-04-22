@@ -6,6 +6,8 @@ import numpy as np
 
 from stock_data import fetch_stock_data, get_sample_stocks
 from optimizer import QuantumPortfolioOptimizer
+from qiskit.circuit.library import QAOAAnsatz
+from qiskit_optimization.converters import QuadraticProgramToQubo
 
 app = FastAPI(title="Quantum Portfolio Optimizer")
 
@@ -62,10 +64,24 @@ def optimize(request: OptimizeRequest):
 
     result = opt.optimize()
 
+    try:
+        from qiskit_optimization import QuadraticProgram
+        qp = QuadraticProgram("portfolio")
+        for sym in request.symbols:
+            qp.binary_var(sym)
+        qubo_converter = QuadraticProgramToQubo()
+        qubo = qubo_converter.convert(qp)
+        operator, _ = qubo.to_ising()
+        circuit = QAOAAnsatz(operator, reps=1)
+        circuit_drawing = circuit.draw(outpu='text').single_string()
+    except:
+        circuit_drawing = None
+
     return {
         "allocations": result.allocations,
         "expected_return": result.expected_return,
         "risk": result.risk,
         "energy": result.energy,
+        "sharpe_ratio": result.sharpe_ratio,
         "current_prices": data["current_prices"]
     }
