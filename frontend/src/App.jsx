@@ -239,13 +239,13 @@ function App() {
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm text-white/40">Investment Amount</span>
                   <span className="text-sm font-medium">
-                    {investmentAmount !== '' ? `£${Math.min(Number(investmentAmount), 1000000).toLocaleString()}` : '—'}
+                    {investmentAmount !== '' ? `£${Math.min(Number(investmentAmount), 9999999).toLocaleString()}` : '—'}
                   </span>
                 </div>
                 <input
                   type="number"
                   min="0"
-                  max="1000000"
+                  max="9999999"
                   step="100"
                   value={investmentAmount}
                   onKeyDown={e => {
@@ -361,7 +361,7 @@ function App() {
                           />
                           <span className="text-sm font-medium">{item.name}</span>
                           <span className="text-sm text-white/40">
-                            {item.value}% · £{Math.round((Math.min(Number(investmentAmount), 1000000) || 0) * item.value / 100).toLocaleString()}
+                            {item.value}% · £{Math.round((Math.min(Number(investmentAmount), 9999999) || 0) * item.value / 100).toLocaleString()}
                           </span>
                         </div>
                       ))}
