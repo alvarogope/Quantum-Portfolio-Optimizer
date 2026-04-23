@@ -25,7 +25,7 @@ The approach is hybrid quantum-classical: QAOA determines which stocks to includ
 - 📊 **Classical Weight Optimization** - scipy mean-variance optimization allocates capital across selected stocks
 - 📈 **Real-Time Stock Data** - Live price and returns data from Yahoo Finance via yfinance
 - 🎛️ **Risk Tolerance Slider** - Conservative, Balanced, and Aggressive profiles
-- 💵 **Dollar Allocation** - Investment amount input with per-stock dollar breakdown
+- 💵 **GBP Allocation** - Investment amount input with per-stock GBP breakdown
 - 📉 **Portfolio Metrics** - Expected Return, Volatility, Sharpe Ratio, and QAOA Energy
 - 🔬 **Circuit Visualization** - View the actual QAOA quantum circuit used for optimization
 - 📱 **Mobile Responsive** - Glassmorphism UI that works across screen sizes
