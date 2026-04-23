@@ -15,7 +15,7 @@ The approach is hybrid quantum-classical: QAOA determines which stocks to includ
 
 ## 📸 Preview
 
-![Quantum Portfolio Optimizer](assets/preview.png)
+![Quantum Portfolio Optimizer](https://github.com/alvarogope/Quantum-Portfolio-Optimizer/blob/master/assets/Preview.png)
 
 ---
 
