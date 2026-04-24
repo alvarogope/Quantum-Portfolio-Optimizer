@@ -21,17 +21,17 @@ The approach is hybrid quantum-classical: QAOA determines which stocks to includ
 
 ## ✨ Features
 
-- ⚛️ **QAOA Stock Selection** - Quantum circuit determines optimal stock inclusion via QUBO encoding
-- 📊 **Classical Weight Optimization** - scipy mean-variance optimization allocates capital across selected stocks
-- 📈 **Real-Time Stock Data** - Live price and returns data from Yahoo Finance via yfinance
-- 🎛️ **Risk Tolerance Slider** - Conservative, Balanced, and Aggressive profiles
-- 💵 **GBP Allocation** - Investment amount input with per-stock GBP breakdown
-- 📉 **Portfolio Metrics** - Expected Return, Volatility, Sharpe Ratio, and QAOA Energy
-- 🔬 **Circuit Visualization** - View the actual QAOA quantum circuit used for optimization
-- 📱 **Mobile Responsive** - Glassmorphism UI that works across screen sizes
-- ⌨️ **Keyboard Shortcut** - Press Enter to run optimization
-- 💬 **Toast Notifications** - Real-time feedback on optimization status
-- ℹ️ **Metric Tooltips** - Inline explanations for each financial metric
+-  **QAOA Stock Selection** - Quantum circuit determines optimal stock inclusion via QUBO encoding
+-  **Classical Weight Optimization** - scipy mean-variance optimization allocates capital across selected stocks
+-  **Real-Time Stock Data** - Live price and returns data from Yahoo Finance via yfinance
+-  **Risk Tolerance Slider** - Conservative, Balanced, and Aggressive profiles
+-  **GBP Allocation** - Investment amount input with per-stock GBP breakdown
+-  **Portfolio Metrics** - Expected Return, Volatility, Sharpe Ratio, and QAOA Energy
+-  **Circuit Visualization** - View the actual QAOA quantum circuit used for optimization
+-  **Mobile Responsive** - Glassmorphism UI that works across screen sizes
+-  **Keyboard Shortcut** - Press Enter to run optimization
+-  **Toast Notifications** - Real-time feedback on optimization status
+-  **Metric Tooltips** - Inline explanations for each financial metric
 
 ---
 
