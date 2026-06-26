@@ -57,7 +57,7 @@ function App() {
       showToast('Select at least 2 stocks', 'error')
       return
     }
-    if (!investmentAmount || investmentAmount <= 0) {
+    if (!investmentAmount || investmentAmount <= 0 || isNaN(investmentAmount)) {
       showToast('Enter an investment amount', 'error')
       return
     }
@@ -297,9 +297,12 @@ function App() {
                     }
                   }}
                   onChange={e => {
-                    const raw = e.target.value.replace(/\D/g, '').slice(0, 7)
-                    setInvestmentAmount(raw)
-                    setInvestmentError(null)
+                    const val = e.target.value
+                    if (val==='') {
+                      setInvestmentAmount('')
+                    } else {
+                      setInvestmentAmount(parseInt(val) || 0)
+                    }
                   }}
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white text-right font-mono focus:outline-none focus:border-white/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   placeholder="e.g. 10000"
