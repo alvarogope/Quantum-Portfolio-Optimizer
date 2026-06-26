@@ -136,7 +136,6 @@ function App() {
         <header className="border-b border-white/5">
           <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">⚛️</span>
               <span className="text-lg font-medium tracking-tight">Quantum Portfolio</span>
             </div>
             <div className="hidden sm:flex items-center gap-2 text-xs text-white/40">
@@ -156,9 +155,7 @@ function App() {
             <p className="text-lg text-white/40 max-w-xl mx-auto">
               Leverage quantum computing to find optimal asset allocation using QAOA algorithm
             </p>
-          </div>
-
-          {/* How it works */}
+                      {/* How it works */}
           <div className="mb-12 rounded-2xl bg-white/[0.06] border border-white/[0.10] p-6 md:p-8">
             <h2 className="text-lg font-medium mb-4">How it works</h2>
             <div className="grid md:grid-cols-3 gap-6 text-sm text-white/60">
@@ -194,6 +191,9 @@ function App() {
               </div>
             </div>
           </div>
+
+          </div>
+
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
             {/* Left Panel */}
