@@ -158,6 +158,43 @@ function App() {
             </p>
           </div>
 
+          {/* How it works */}
+          <div className="mb-12 rounded-2xl bg-white/[0.06] border border-white/[0.10] p-6 md:p-8">
+            <h2 className="text-lg font-medium mb-4">How it works</h2>
+            <div className="grid md:grid-cols-3 gap-6 text-sm text-white/60">
+              <div>
+                <h3 className="text-white font-medium mb-2">1. The Problem</h3>
+                <p>Portfolio optimization is about finding the best way to distribute money across assets to maximize returns while minimizing risk. With many stocks, there are millions of possible combinations to evaluate</p>
+              </div>
+              <div>
+                <h3 className="text-white font-medium mb-2">2. The Quantum Approach</h3>
+                  <p>QAOA (Quantum Approximate Optimization Algorithm) uses quantum superposition to evaluate all possible portfolios simultaneously, then collapse to the optimal solution. A task that scales exponentially for classical computers.</p>
+              </div>
+              <div>
+                <h3 className="text-white font-medium mb-2">3. Hybrid Solution</h3>
+                <p>This app uses a hybrid approach: QAOA selects which assets to include, then classical optimization (scipy) determines the exact allocation percentages. Real stock data is fetched live fro Yahoo Finance.</p>
+              </div>
+            </div>
+            <div className="mt-6 pt-6 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+              <div>
+                <span className="text-white/40">Expected Return.</span>
+                <p className="text-white mt-1">Projected annual gain based on historical performance</p>
+              </div>
+              <div>
+                <span className="text-white/40">Volatility</span>
+                <p className="text-white mt-1">Risk measure: How much returns fluctuate</p>
+              </div>
+              <div>
+                <span className="text-white/40">Sharpe Ratio</span>
+                <p className="text-white mt-1">Risk adjusted return. Higher is better (above 1 is good)</p>
+              </div>
+              <div>
+                <span className="text-white /40">QAOA Energy</span>
+                <p className="text-white mt-1">Optimization score. Lower means better solution found</p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8">
             {/* Left Panel */}
             <div className="lg:col-span-3 space-y-6">
