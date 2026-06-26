@@ -1,6 +1,6 @@
-*.js linguist-detectable=false
-*.jsx linguist-detectable=false
-*.ts linguist-detectable=false
-*.tsx linguist-detectable=false
-*.html linguist-detectable=false
-*.css linguist-detectable=false
+*.js linguist-vendored
+*.jsx linguist-vendored
+*.ts linguist-vendored
+*.tsx linguist-vendored
+*.html linguist-vendored
+*.css linguist-vendored
