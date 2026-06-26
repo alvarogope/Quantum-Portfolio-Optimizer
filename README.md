@@ -7,6 +7,8 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
+**Live Demo:** https://quantum-portfolio-optimizer-o3hq.vercel.app
+
 A full-stack Quantum Portfolio Optimizer that uses the Quantum Approximate Optimization Algorithm (QAOA) to solve asset allocation as a QUBO problem. Users select stocks, adjust risk tolerance, and the app returns optimal allocation percentages with expected return, volatility, and Sharpe ratio.
 
 The approach is hybrid quantum-classical: QAOA determines which stocks to include, and scipy mean-variance optimization determines how much to allocate to each.
