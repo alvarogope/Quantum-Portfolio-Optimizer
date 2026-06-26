@@ -268,6 +268,12 @@ function App() {
                 )}
               </div>
 
+              {selected.length < 2 && (
+                <p className="text-sm text-white/40 text-center mb-4">
+                  Select at least 2 stocks to optimize
+                </p>
+              )}
+
               {/* Button */}
               <button
                 onClick={optimize}
