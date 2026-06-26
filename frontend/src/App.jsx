@@ -57,6 +57,10 @@ function App() {
       showToast('Select at least 2 stocks', 'error')
       return
     }
+    if (!investmentAmount || investmentAmount <= 0) {
+      showToast('Enter an investment amount', 'error')
+      return
+    }
 
     setLoading(true)
     setError(null)
