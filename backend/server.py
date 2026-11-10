@@ -73,7 +73,7 @@ def optimize(request: OptimizeRequest):
         qubo = qubo_converter.convert(qp)
         operator, _ = qubo.to_ising()
         circuit = QAOAAnsatz(operator, reps=1)
-        circuit_drawing = circuit.draw(outpu='text').single_string()
+        circuit_drawing = circuit.draw(output='text').single_string()
     except:
         circuit_drawing = None
 
